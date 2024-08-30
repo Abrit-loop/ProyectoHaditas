@@ -55,7 +55,7 @@ digitalWrite(trigPinL, LOW);
   distanceL = (durationL*0.0343)/2;
    Serial.println(distanceL);
    //algoritmo
-  if (distanceR >= 5) {
+  if (distanceR >= 5 && (distanceL >= 5)) {
     angulo=90;
     servoMotor.write(angulo);
   }else{
