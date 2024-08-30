@@ -1,3 +1,6 @@
+// Programa para control el servo con  sensores
+
+
 //definiciones//
 #define OUTPUT 0x1
 #define INPUT 0x0
@@ -29,6 +32,7 @@ void setup() {
     //servo//
   servoMotor.attach(11); //el pin del servo es el 11
   Serial.begin (9600);
+  servoMotor.write(90)
 }
 
 void loop() {
@@ -59,8 +63,12 @@ digitalWrite(trigPinL, LOW);
     angulo=90;
     servoMotor.write(angulo);
   }else{
-  while (distanceR < 5) {
+  while (distanceR < 5 && (distanceL >= 5)) {
     angulo=45;
+    servoMotor.write(angulo);
+   }
+     while (distanceL < 5 && (distanceR >= 5)) {
+    angulo=135;
     servoMotor.write(angulo);
    }
   }
