@@ -4,7 +4,7 @@ const int PinIN1 = 2;
 const int PinIN2 = 4;
 const int PinPWM = 3;
 
-int MotorSpeed = 255;
+int MotorSpeed (255);
 
 void setup() {
 // inicializar la comunicación serial a 9600 bits por segundo:
@@ -42,6 +42,7 @@ digitalWrite (PinIN1, LOW);
 digitalWrite (PinIN2, HIGH);
 }
 
+
 //función para apagar el motor
 void MotorStop()
 {
@@ -50,4 +51,3 @@ digitalWrite (PinIN2, LOW);
 }
 
 
-__________________________________
