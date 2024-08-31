@@ -25,8 +25,7 @@ float distanceL;
 const int PinIN1 = 2;
 const int PinIN2 = 4;
 const int PinPWM = 3;
-
-int MotorSpeed ();
+int motorSpeed;
 
 
 void setup() {
@@ -48,6 +47,31 @@ pinMode(PinPWM, OUTPUT);
   Serial.begin (9600);
   microServo.write(90);
 }
+//funciones//
+
+void MotorHorario(int Speed)//función para girar el motor en sentido horario
+{
+analogWrite (PinPWM, Speed);
+digitalWrite (PinIN1, HIGH);
+digitalWrite (PinIN2, LOW);
+}
+//función para girar el motor en sentido antihorario
+void MotorAntihorario(int Speed)
+{
+analogWrite (PinPWM, Speed);
+digitalWrite (PinIN1, LOW);
+digitalWrite (PinIN2, HIGH);
+}
+
+
+//función para apagar el motor
+void MotorStop()
+{
+digitalWrite (PinIN1, LOW);
+digitalWrite (PinIN2, LOW);
+}
+
+//loop//
 
 void loop() {
   // put your main code here, to run repeatedly:
@@ -73,50 +97,46 @@ digitalWrite(trigPinL, LOW);
   distanceL = (durationL*0.0343)/2;
    Serial.println(distanceL);
    //algoritmo
-  if (distanceR >= 10 && (distanceL >= 10)) {
+  if (distanceR = distanceL) {
     angulo=90;
+    motorSpeed=255;
     microServo.write(angulo);
-    MotorHorario(255);
+    MotorHorario(motorSpeed);
 
   }else{
-  while (distanceR < 10 && (distanceL >= 10)) {
-    angulo=45;
-    microServo.write(angulo);
-    MotorHorario(128);
-   }
-     while (3 < distanceL < 10 && (distanceR >= 10)) {
-    angulo=135;
-    microServo.write(angulo);
-    MotorHorario(128);
-
-    while (distanceR < 3 && (distanceL >= 10)) {
-    angulo=25;
-    microServo.write(angulo);
-    MotorHorario(128);
-   }
-   } 
+    if (distanceR > distanceL) {
+        while (distanceR - distanceL > 3) {
+          angulo=135;
+          motorSpeed=126;
+          microServo.write(angulo);
+          MotorHorario(motorSpeed);
+          while (distanceR - distanceL < 3) {
+            angulo=115;
+            motorSpeed=126;
+            microServo.write(angulo);
+            MotorHorario(motorSpeed);
+             }
+             }
+             }else{
+              if (distanceL > distanceR) {
+        while (distanceL - distanceR > 3) {
+          angulo=45;
+          motorSpeed=126;
+          microServo.write(angulo);
+          MotorHorario(motorSpeed);
+          while (distanceL - distanceR < 3) {
+            angulo=65;
+            motorSpeed=126;
+            microServo.write(angulo);
+            MotorHorario(motorSpeed);
+            }
+             }
+              }
+          }
   }
 }
-//función para girar el motor en sentido horario
-void MotorHorario(int Speed)
-{
-analogWrite (PinPWM, Speed);
-digitalWrite (PinIN1, HIGH);
-digitalWrite (PinIN2, LOW);
-}
-//función para girar el motor en sentido antihorario
-void MotorAntihorario(int Speed)
-{
-analogWrite (PinPWM, Speed);
-digitalWrite (PinIN1, LOW);
-digitalWrite (PinIN2, HIGH);
-}
+  
 
 
-//función para apagar el motor
-void MotorStop()
-{
-digitalWrite (PinIN1, LOW);
-digitalWrite (PinIN2, LOW);
-}
+
 
